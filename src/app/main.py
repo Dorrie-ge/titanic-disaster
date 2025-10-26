@@ -13,7 +13,7 @@ def main():
     print("\n✅ train.csv shape:", train.shape)
     print("✅ test.csv shape:", test.shape)
 
-    # --- Step 14 回顾：简单清洗 + 特征准备 ---
+    # --- Step 14 Review: Data Cleaning + Preparation ---
     print("\n[INFO] Cleaning data...")
     train["Age"].fillna(train["Age"].median(), inplace=True)
     test["Age"].fillna(test["Age"].median(), inplace=True)
@@ -22,25 +22,24 @@ def main():
     train["Embarked"].fillna("S", inplace=True)
     test["Fare"].fillna(test["Fare"].median(), inplace=True)
 
-    # 选择用于训练的特征
+    # choose features
     features = ["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare"]
     X = train[features]
     y = train["Survived"]
 
-    # --- Step 15: 拆分训练/验证集 ---
+    # --- Step 15 ---
     print("\n[INFO] Splitting data (80/20)...")
     X_train, X_val, y_train, y_val = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
     print(f"Training samples: {X_train.shape[0]}, Validation samples: {X_val.shape[0]}")
 
-    # --- Step 15: 训练逻辑回归模型 ---
     print("\n[TRAIN] Training Logistic Regression model...")
     model = LogisticRegression(max_iter=200)
     model.fit(X_train, y_train)
     print("[TRAIN] Model trained successfully!")
 
-    # --- Step 16: 计算训练集与验证集准确率 ---
+    # --- Step 16 ---
     y_pred_train = model.predict(X_train)
     y_pred_val   = model.predict(X_val)
     train_acc = accuracy_score(y_train, y_pred_train)
@@ -48,12 +47,12 @@ def main():
     print(f"\n[METRICS] Training Accuracy:  {train_acc:.4f}")
     print(f"[METRICS] Validation Accuracy: {val_acc:.4f}")
 
-    # --- Step 17: 在 test.csv 上预测 ---
+    # --- Step 17: test.csv prediction ---
     print("\n[PREDICT] Making predictions on test.csv...")
     X_test = test[features]
     predictions = model.predict(X_test)
 
-    # 保存预测结果
+    # save prediction
     output = pd.DataFrame({
         "PassengerId": test["PassengerId"],
         "Survived": predictions
@@ -62,7 +61,7 @@ def main():
     output.to_csv(output_path, index=False)
     print(f"[OUTPUT] Predictions saved to {output_path}")
 
-    # --- Step 18: 若 test.csv 含 Survived，则打印准确率 ---
+    # --- Step 18 ---
     if "Survived" in test.columns:
         test_acc = accuracy_score(test["Survived"], predictions)
         print(f"[METRICS] Test Accuracy: {test_acc:.4f}")
