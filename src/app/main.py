@@ -21,6 +21,11 @@ def main():
     test["Sex"] = test["Sex"].map({"male": 0, "female": 1})
     train["Embarked"].fillna("S", inplace=True)
     test["Fare"].fillna(test["Fare"].median(), inplace=True)
+    print("[CLEAN] Filled missing Age values with median.")
+    print("[CLEAN] Encoded Sex as numeric 0/1.")
+    print("[CLEAN] Filled missing Embarked with 'S'.")
+    print("[CLEAN] Filled missing Fare in test set with median.")
+
 
     # choose features
     features = ["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare"]
