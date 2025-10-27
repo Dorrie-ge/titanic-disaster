@@ -8,39 +8,48 @@ This repository contains two containerized environments: one in Python and one i
 You can follow the instructions below to run both containers and reproduce the results.
 
 Repository Structure
+
 titanic-disaster/
-├── Dockerfile                
+├── Dockerfile                 
 ├── requirements.txt           
 ├── README.md                  
 ├── src/
-│   ├── app/                   # Python script
+│   ├── app/                   # Python scripts
 │   │   └── main.py
-│   ├── r_app/                 # R container and script
+│   ├── r_app/                 # R scripts & Dockerfile
 │   │   ├── Dockerfile
 │   │   └── main.R
-│   └── data/                  # Data folder
+│   └── data/                  # Data folder 
 └── .gitignore
 
+
 Step 1 — Clone the Repository
+
 Step 2 — Download the Data
 You need to manually download the Kaggle Titanic dataset because it cannot be uploaded to GitHub. Go to: https://www.kaggle.com/competitions/titanic/data
 
 Download the following files:
 
 train.csv
+
 test.csv
+
 gender_submission.csv
 
 Move them into: titanic-disaster/src/data/
 
 Step 3 — Run the Python Docker Container
+
 Build the image
+
 docker build -t titanic-app .
 
 Run the container
+
 docker run --rm -v "$PWD/src/data:/app/src/data" titanic-app
 
 Expected Output
+
 [INFO] Loading datasets...
 ✅ train.csv shape: (891, 12)
 ✅ test.csv shape: (418, 11)
@@ -56,12 +65,15 @@ src/data/predictions.csv
 
 Step 4 — Run the R Docker Container
 Build the image
+
 docker build -t titanic-r -f src/r_app/Dockerfile src/r_app
 
 Run the container
+
 docker run --rm -v "$PWD/src/data:/app/src/data" titanic-r
 
 Expected Output
+
 [INFO] Loading dataset...
 ✅ train.csv shape: 891 rows 12 cols
 [TRAIN] Model trained successfully!
@@ -71,9 +83,11 @@ Expected Output
 [DONE] R steps 14–21 completed successfully ✅
 
 Output File
+
 src/data/predictions_R.csv
 
 Step 5 — Model Summary
+
 Environment	Language	Algorithm	Accuracy (Train / Validation)	Output
 Python	scikit-learn	Logistic Regression	~0.79 / ~0.78	predictions.csv
 R	glm (caret)	Logistic Regression	~0.81 / ~0.75	predictions_R.csv
@@ -83,6 +97,7 @@ Step 6 — Expected Results
 After running both containers, two output files will be created:
 
 src/data/predictions.csv
+
 src/data/predictions_R.csv
 
 
