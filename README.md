@@ -9,10 +9,13 @@ You can follow the instructions below to run both containers and reproduce the r
 
 Repository Structure
 
+## 📂 Project Structure
+
+```text
 titanic-disaster/
-├── Dockerfile                 
-├── requirements.txt           
-├── README.md                  
+├── Dockerfile                 # Main Dockerfile for Python
+├── requirements.txt           # Python dependencies
+├── README.md                  # Documentation
 ├── src/
 │   ├── app/                   # Python scripts
 │   │   └── main.py
@@ -20,12 +23,13 @@ titanic-disaster/
 │   │   ├── Dockerfile
 │   │   └── main.R
 │   └── data/                  # Data folder 
-└── .gitignore
+└── .gitignore                 # Ignore unnecessary files
+```
 
 
-Step 1 — Clone the Repository
+## Step 1 — Clone the Repository
 
-Step 2 — Download the Data
+## Step 2 — Download the Data
 You need to manually download the Kaggle Titanic dataset because it cannot be uploaded to GitHub. Go to: https://www.kaggle.com/competitions/titanic/data
 
 Download the following files:
@@ -38,7 +42,7 @@ gender_submission.csv
 
 Move them into: titanic-disaster/src/data/
 
-Step 3 — Run the Python Docker Container
+## Step 3 — Run the Python Docker Container
 
 Build the image
 
@@ -50,6 +54,7 @@ docker run --rm -v "$PWD/src/data:/app/src/data" titanic-app
 
 Expected Output
 
+```text
 [INFO] Loading datasets...
 ✅ train.csv shape: (891, 12)
 ✅ test.csv shape: (418, 11)
@@ -59,11 +64,11 @@ Expected Output
 [METRICS] Validation Accuracy: 0.7877
 [OUTPUT] Predictions saved to src/data/predictions.csv
 [DONE] Steps 15–18 completed successfully ✅
-
+```
 Output File
 src/data/predictions.csv
 
-Step 4 — Run the R Docker Container
+## Step 4 — Run the R Docker Container
 Build the image
 
 docker build -t titanic-r -f src/r_app/Dockerfile src/r_app
@@ -74,6 +79,7 @@ docker run --rm -v "$PWD/src/data:/app/src/data" titanic-r
 
 Expected Output
 
+```text
 [INFO] Loading dataset...
 ✅ train.csv shape: 891 rows 12 cols
 [TRAIN] Model trained successfully!
@@ -81,18 +87,18 @@ Expected Output
 [METRICS] Validation Accuracy: 0.7472
 [OUTPUT] Predictions saved to src/data/predictions_R.csv
 [DONE] R steps 14–21 completed successfully ✅
-
+```
 Output File
 
 src/data/predictions_R.csv
 
-Step 5 — Model Summary
+## Step 5 — Model Summary
 
 Environment	Language	Algorithm	Accuracy (Train / Validation)	Output
 Python	scikit-learn	Logistic Regression	~0.79 / ~0.78	predictions.csv
 R	glm (caret)	Logistic Regression	~0.81 / ~0.75	predictions_R.csv
 
-Step 6 — Expected Results
+## Step 6 — Expected Results
 
 After running both containers, two output files will be created:
 
@@ -105,7 +111,9 @@ Each contains predicted survival outcomes for all passengers in test.csv.
 The scripts print informative progress messages (e.g., data cleaning, model training, accuracy, and output paths) directly to the terminal.
 
 
-
+## 
 Shuoyu (Dorrie) Ge
+
 Machine Learning & Data Science
+
 Northwestern University
