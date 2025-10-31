@@ -2,12 +2,8 @@
 
 This project trains logistic regression models in **Python** and **R** to predict passenger survival on the Titanic dataset.
 
-Overview
-
 This repository contains two containerized environments: one in Python and one in R that build and train logistic regression models to predict passenger survival from the Titanic disaster (April 15, 1912). Both environments are fully reproducible using Docker.
 You can follow the instructions below to run both containers and reproduce the results.
-
-Repository Structure
 
 ## 📂 Project Structure
 
@@ -50,8 +46,9 @@ docker build -t titanic-app .
 
 Run the container
 
+```text
 docker run --rm -v "$PWD/src/data:/app/src/data" titanic-app
-
+```
 Expected Output
 
 ```text
@@ -70,13 +67,13 @@ src/data/predictions.csv
 
 ## Step 4 — Run the R Docker Container
 Build the image
-
+```text
 docker build -t titanic-r -f src/r_app/Dockerfile src/r_app
-
+```
 Run the container
-
+```text
 docker run --rm -v "$PWD/src/data:/app/src/data" titanic-r
-
+```
 Expected Output
 
 ```text
